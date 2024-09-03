@@ -160,3 +160,8 @@ variable "aks_system_node_labels" {
   description = "A mapping of labels to assign to the system node pool"
   type        = map(string)
 }
+
+variable "aks_kubeconfig_target_file" {
+  description = "The path to the kubeconfig file, including the file itself"
+  type        = string
+}

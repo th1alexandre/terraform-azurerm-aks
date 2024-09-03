@@ -31,9 +31,11 @@ module "virtual_network" {
   tags = var.tags
 }
 
-resource "local_sensitive_file" "aks_config" {
-  content  = module.kubernetes_cluster.kube_config_raw
-  filename = ".kube/t1atfazaks-aks-config.yaml"
+module "kubeconfig_file" {
+  source = "./modules/local/sensitive_file/kubeconfig"
+
+  kube_config_raw = module.kubernetes_cluster.kube_config_raw
+  filename        = var.aks_kubeconfig_target_file
 }
 
 module "kubernetes_cluster" {
