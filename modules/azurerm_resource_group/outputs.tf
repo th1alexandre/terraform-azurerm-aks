@@ -1,4 +1,8 @@
 # Outputs for the resource group module
-output "resource_group_name" {
+output "name" {
   value = azurerm_resource_group.this.name
+}
+
+output "location" {
+  value = azurerm_resource_group.this.location
 }

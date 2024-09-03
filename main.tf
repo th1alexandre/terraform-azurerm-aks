@@ -1,3 +1,8 @@
+locals {
+  region_location = module.resource_group.location
+  resource_group  = module.resource_group.name
+}
+
 module "resource_group" {
   source = "./modules/azurerm_resource_group"
 
@@ -12,8 +17,8 @@ module "virtual_network" {
 
   vnet_name           = var.vnet_name
   vnet_address_space  = var.vnet_address_space
-  resource_group_name = module.resource_group.resource_group_name
-  location            = var.resource_group_location
+  resource_group_name = local.resource_group
+  location            = local.region_location
 
   subnet1_name           = var.subnet1_name
   subnet1_address_prefix = var.subnet1_address_prefix
