@@ -1,3 +1,5 @@
+**/.kube/*
+**/.ssh/*
 **/.infracost/*
 
 # Local .terraform directories
