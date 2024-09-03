@@ -7,7 +7,7 @@ locals {
 }
 
 module "backend" {
-  source = "./modules/azurerm_backend"
+  source = "./modules/azurerm/backend"
 
   resource_group_name  = local.tf_backend_resource_group
   location             = local.tf_backend_location

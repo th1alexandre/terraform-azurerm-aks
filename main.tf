@@ -4,7 +4,7 @@ locals {
 }
 
 module "resource_group" {
-  source = "./modules/azurerm_resource_group"
+  source = "./modules/azurerm/resource_group"
 
   name     = var.resource_group_name
   location = var.resource_group_location
@@ -13,7 +13,7 @@ module "resource_group" {
 }
 
 module "virtual_network" {
-  source = "./modules/azurerm_virtual_network"
+  source = "./modules/azurerm/virtual_network"
 
   vnet_name           = var.vnet_name
   vnet_address_space  = var.vnet_address_space
@@ -37,7 +37,7 @@ resource "local_sensitive_file" "aks_config" {
 }
 
 module "kubernetes_cluster" {
-  source = "./modules/azurerm_aks"
+  source = "./modules/azurerm/aks"
 
   cluster_name                 = var.aks_cluster_name
   location                     = local.region_location
