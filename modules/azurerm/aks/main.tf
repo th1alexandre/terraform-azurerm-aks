@@ -40,6 +40,8 @@ resource "azurerm_kubernetes_cluster" "this" {
     node_count     = var.system_node_count
     vnet_subnet_id = var.system_vnet_subnet_id
 
+    zones = ["1", "2", "3"]
+
     enable_host_encryption       = var.system_enable_host_encryption
     only_critical_addons_enabled = var.system_only_critical_addons_enabled
     temporary_name_for_rotation  = var.system_temporary_name_for_rotation
@@ -68,6 +70,7 @@ resource "azurerm_kubernetes_cluster_node_pool" "satellite" {
 
   os_type = "Linux"
   mode    = "User"
+  zones   = ["1", "2", "3"]
 
   enable_host_encryption = var.satellite_enable_host_encryption
 
