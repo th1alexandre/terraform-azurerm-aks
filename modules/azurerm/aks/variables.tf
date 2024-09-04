@@ -133,6 +133,37 @@ variable "system_node_labels" {
   type        = map(string)
 }
 
+# Satellite Node Pool
+variable "satellite_node_pool_name" {
+  description = "The name of the satellite node pool"
+  type        = string
+}
+
+variable "satellite_vm_size" {
+  description = "The size of the Virtual Machines in the node pool"
+  type        = string
+}
+
+variable "satellite_node_count" {
+  description = "The number of nodes in the node pool"
+  type        = number
+}
+
+variable "satellite_vnet_subnet_id" {
+  description = "The ID of the subnet in which to deploy the node pool"
+  type        = string
+}
+
+variable "satellite_enable_host_encryption" {
+  description = "Enable host encryption"
+  type        = bool
+}
+
+variable "satellite_node_labels" {
+  description = "A mapping of labels to assign to the satellite node pool"
+  type        = map(string)
+}
+
 variable "tags" {
   description = "A mapping of tags to assign to the cluster resources"
   type        = map(string)

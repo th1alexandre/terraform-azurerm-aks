@@ -161,6 +161,33 @@ variable "aks_system_node_labels" {
   type        = map(string)
 }
 
+# Satellite Node Pool
+variable "aks_satellite_node_pool_name" {
+  description = "The name of the satellite node pool"
+  type        = string
+}
+
+variable "aks_satellite_vm_size" {
+  description = "The size of the Virtual Machines in the node pool"
+  type        = string
+}
+
+variable "aks_satellite_node_count" {
+  description = "The number of nodes in the node pool"
+  type        = number
+}
+
+variable "aks_satellite_enable_host_encryption" {
+  description = "Enable host encryption"
+  type        = bool
+}
+
+variable "aks_satellite_node_labels" {
+  description = "A mapping of labels to assign to the satellite node pool"
+  type        = map(string)
+}
+
+# Kubeconfig File
 variable "aks_kubeconfig_target_file" {
   description = "The path to the kubeconfig file, including the file itself"
   type        = string

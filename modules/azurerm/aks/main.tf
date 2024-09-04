@@ -57,3 +57,27 @@ resource "azurerm_kubernetes_cluster" "this" {
 
   tags = var.tags
 }
+
+resource "azurerm_kubernetes_cluster_node_pool" "satellite" {
+  kubernetes_cluster_id = azurerm_kubernetes_cluster.this.id
+
+  name           = var.satellite_node_pool_name
+  vm_size        = var.satellite_vm_size
+  node_count     = var.satellite_node_count
+  vnet_subnet_id = var.satellite_vnet_subnet_id
+
+  os_type = "Linux"
+  mode    = "User"
+
+  enable_host_encryption = var.satellite_enable_host_encryption
+
+  upgrade_settings {
+    drain_timeout_in_minutes      = 0
+    max_surge                     = "10%"
+    node_soak_duration_in_minutes = 0
+  }
+
+  node_labels = var.satellite_node_labels
+
+  tags = var.tags
+}

@@ -76,5 +76,13 @@ module "kubernetes_cluster" {
   system_only_critical_addons_enabled = var.aks_system_only_critical_addons_enabled
   system_temporary_name_for_rotation  = var.aks_system_temporary_name_for_rotation
 
+  ## Satellite Node Pool
+  satellite_node_pool_name         = var.aks_satellite_node_pool_name
+  satellite_vm_size                = var.aks_satellite_vm_size
+  satellite_node_count             = var.aks_satellite_node_count
+  satellite_vnet_subnet_id         = module.virtual_network.subnet2_id
+  satellite_node_labels            = var.aks_satellite_node_labels
+  satellite_enable_host_encryption = var.aks_satellite_enable_host_encryption
+
   tags = var.tags
 }
