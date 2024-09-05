@@ -2,9 +2,19 @@
 
 set -e
 
-init_local_backend() {}
+init_local_backend() {
+  sed -i "1,8s/^/# /" backend.tf
+  terraform init -force-copy
+  sed -i "s/\btrue\b/false/g" modules/backend/main.tf
+  terraform destroy -target=module.backend -auto-approve
+}
 
-init_remote_backend() {}
+init_remote_backend() {
+  terraform apply -target=module.backend -auto-approve
+  sed -i "s/\bfalse\b/true/g" modules/backend/main.tf
+  sed -i "1,8s/^# //" backend.tf
+  terraform init -force-copy
+}
 
 if [ "$1" = "-backend=local" ]; then
   init_local_backend
