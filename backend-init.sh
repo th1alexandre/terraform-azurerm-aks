@@ -17,6 +17,7 @@ init_local_backend() {
   sed -i "22,29s/^/# /" backend.tf
 
   # Migrate to local backend
+  echo "Migrating to local backend..."
   terraform init -force-copy
 
   # Confirm the destroy operation
@@ -28,11 +29,13 @@ init_local_backend() {
   sed -i "s/\btrue\b/false/g" modules/backend/main.tf
 
   # Destroy the remote backend resources
+  echo "Destroying remote backend resources..."
   terraform destroy -target=module.backend -auto-approve
 }
 
 init_remote_backend() {
   # Create the required backend resources
+  echo "Creating required remote backend resources..."
   terraform apply -target=module.backend -auto-approve
 
   # Change the prevent_destroy value to true, preventing the backend resources from being destroyed
@@ -42,9 +45,11 @@ init_remote_backend() {
   sed -i "22,29s/^# //" backend.tf
 
   # Migrate the local backend to the remote backend
+  echo "Migrating to remote backend..."
   terraform init -force-copy
 }
 
+# Run the script based on the input argument
 if [ "$1" = "-backend=local" ]; then
   # Confirm the operation
   LOCAL_INIT_CONFIRMATION="Proceeding will migrate the tfstate to local and destroy the remote backend resources. Do you want to continue?"
