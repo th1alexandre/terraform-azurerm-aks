@@ -1,3 +1,16 @@
+module "backend" {
+  source = "./modules/backend"
+
+  resource_group_name  = var.tf_backend_resource_group
+  location             = var.tf_backend_location
+  storage_account_name = var.tf_backend_storage_account
+  container_name       = var.tf_backend_container
+
+  tags = {
+    managed_by = "terraform"
+  }
+}
+
 module "azurerm_resources" {
   source = "./modules/azurerm"
 

@@ -1,3 +1,29 @@
+## TF Backend
+variable "tf_backend_resource_group" {
+  description = "The name of the resource group for the Terraform backend resources"
+  type        = string
+}
+
+variable "tf_backend_location" {
+  description = "The location of the resource group for the Terraform backend resources"
+  type        = string
+}
+
+variable "tf_backend_storage_account" {
+  description = "The name of the storage account for the Terraform backend resources"
+  type        = string
+}
+
+variable "tf_backend_container" {
+  description = "The name of the container for the Terraform backend resources"
+  type        = string
+}
+
+variable "tf_backend_state_file_key" {
+  description = "The name of the state file in the container"
+  type        = string
+}
+
 ## Resource Group
 variable "resource_group_name" {
   description = "The name of the resource group"

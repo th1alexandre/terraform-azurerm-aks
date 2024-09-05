@@ -31,5 +31,4 @@ resource "azurerm_storage_container" "this" {
   lifecycle {
     prevent_destroy = true
   }
-
 }
