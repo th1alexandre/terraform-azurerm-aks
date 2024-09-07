@@ -5,6 +5,16 @@ terraform {
       version = "3.116.0"
     }
 
+    helm = {
+      source  = "hashicorp/helm"
+      version = "2.15.0"
+    }
+
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = "2.32.0"
+    }
+
     local = {
       source  = "hashicorp/local"
       version = "2.5.1"
@@ -14,6 +24,16 @@ terraform {
 
 provider "azurerm" {
   features {}
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "./.kube/aks_config.yaml"
+  }
+}
+
+provider "kubernetes" {
+  config_path = "./.kube/aks_config.yaml"
 }
 
 provider "local" {}
