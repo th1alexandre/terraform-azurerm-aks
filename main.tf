@@ -79,3 +79,7 @@ module "azurerm_resources" {
   ## TAGS
   tags = var.tags
 }
+
+module "helm_resources" {
+  source = "./modules/helm"
+}
