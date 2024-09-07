@@ -218,3 +218,11 @@ variable "aks_kubeconfig_target_file" {
   description = "The path to the kubeconfig file, including the file itself"
   type        = string
 }
+
+## Helm
+variable "cert-manager" {
+  description = "Cert Manager variables"
+  type = object({
+    chart_version = string
+  })
+}

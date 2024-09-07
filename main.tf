@@ -82,4 +82,6 @@ module "azurerm_resources" {
 
 module "helm_resources" {
   source = "./modules/helm"
+
+  cert-manager = var.cert-manager
 }
