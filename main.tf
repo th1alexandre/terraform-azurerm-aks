@@ -83,5 +83,8 @@ module "azurerm_resources" {
 module "helm_resources" {
   source = "./modules/helm"
 
-  cert-manager = var.cert-manager
+  cert-manager  = var.cert-manager
+  ingress-nginx = var.ingress-nginx
+
+  depends_on = [module.azurerm_resources]
 }
