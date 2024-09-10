@@ -87,11 +87,19 @@ module "azurerm_resources" {
   tags = var.tags
 }
 
+locals {
+  ingress-nginx-vars = merge(var.ingress-nginx, {
+    external_ip_name           = module.azurerm_resources.satellite_pip_name
+    external_ip_address        = module.azurerm_resources.satellite_pip_ip_address
+    external_ip_resource_group = module.azurerm_resources.satellite_pip_resource_group
+  })
+}
+
 module "helm_resources" {
   source = "./modules/helm"
 
   cert-manager  = var.cert-manager
-  ingress-nginx = var.ingress-nginx
+  ingress-nginx = local.ingress-nginx-vars
 
   depends_on = [module.azurerm_resources]
 }

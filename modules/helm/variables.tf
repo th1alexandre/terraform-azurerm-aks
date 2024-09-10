@@ -8,6 +8,9 @@ variable "cert-manager" {
 variable "ingress-nginx" {
   description = "Ingress Nginx variables"
   type = object({
-    chart_version = string
+    chart_version              = string
+    external_ip_name           = string
+    external_ip_address        = string
+    external_ip_resource_group = string
   })
 }
