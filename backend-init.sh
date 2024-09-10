@@ -14,7 +14,7 @@ confirm() {
 
 init_local_backend() {
   # Comment the backend configuration block
-  sed -i "22,29s/^/# /" backend.tf
+  sed -i "1,8s/^/# /" backend.tf
 
   # Migrate to local backend
   echo "Migrating to local backend..."
@@ -42,7 +42,7 @@ init_remote_backend() {
   sed -i "s/\bfalse\b/true/g" modules/backend/main.tf
 
   # Uncomment the azurerm backend configuration
-  sed -i "22,29s/^# //" backend.tf
+  sed -i "1,8s/^# //" backend.tf
 
   # Migrate the local backend to the remote backend
   echo "Migrating to remote backend..."
