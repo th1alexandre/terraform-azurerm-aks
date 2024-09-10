@@ -25,12 +25,8 @@ module "azurerm_resources" {
   ## AKS Cluster
   kubernetes_cluster_module = var.kubernetes_cluster_module
 
-  # Satelite Public IP
-  satellite_public_ip_name              = var.satellite_public_ip_name
-  satellite_public_ip_allocation_method = var.satellite_public_ip_allocation_method
-  satellite_public_ip_version           = var.satellite_public_ip_version
-  satellite_public_ip_reverse_fqdn      = var.satellite_public_ip_reverse_fqdn
-  satellite_public_ip_sku               = var.satellite_public_ip_sku
+  ## Satellite Public IP
+  satellite_ingress_nginx_pip_module = var.satellite_ingress_nginx_pip_module
 
 
   ## KUBECONFIG file

@@ -92,13 +92,14 @@ module "kubeconfig_file" {
 module "satellite_ingress_nginx_public_ip" {
   source = "./public_ip"
 
-  public_ip_name    = var.satellite_public_ip_name
-  region_location   = local.region_location
-  resource_group    = module.kubernetes_cluster.node_resource_group
-  allocation_method = var.satellite_public_ip_allocation_method
-  ip_version        = var.satellite_public_ip_version
-  reverse_fqdn      = var.satellite_public_ip_reverse_fqdn
-  sku               = var.satellite_public_ip_sku
+  region_location = local.region_location
+  resource_group  = module.kubernetes_cluster.node_resource_group
+
+  public_ip_name    = var.satellite_ingress_nginx_pip_module.pip_name
+  allocation_method = var.satellite_ingress_nginx_pip_module.allocation_method
+  ip_version        = var.satellite_ingress_nginx_pip_module.ip_version
+  reverse_fqdn      = var.satellite_ingress_nginx_pip_module.reverse_fqdn
+  sku               = var.satellite_ingress_nginx_pip_module.sku
 
   tags = var.tags
 }

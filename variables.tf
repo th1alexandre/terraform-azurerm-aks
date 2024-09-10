@@ -86,30 +86,15 @@ variable "kubernetes_cluster_module" {
   description = "A map of variables to pass to the kubernetes cluster module"
 }
 
-# Satellite Public IP
-variable "satellite_public_ip_name" {
-  description = "The name of the public IP address"
-  type        = string
-}
-
-variable "satellite_public_ip_allocation_method" {
-  description = "The allocation method for the public IP address"
-  type        = string
-}
-
-variable "satellite_public_ip_version" {
-  description = "The IP version for the public IP address"
-  type        = string
-}
-
-variable "satellite_public_ip_reverse_fqdn" {
-  description = "The reverse FQDN for the public IP address"
-  type        = string
-}
-
-variable "satellite_public_ip_sku" {
-  description = "The SKU for the public IP address"
-  type        = string
+## Satellite Ingress-Nginx Public IP
+variable "satellite_ingress_nginx_pip_module" {
+  type = object({
+    pip_name          = string
+    allocation_method = string
+    ip_version        = string
+    reverse_fqdn      = string
+    sku               = string
+  })
 }
 
 # Kubeconfig File
