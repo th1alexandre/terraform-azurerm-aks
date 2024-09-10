@@ -28,34 +28,16 @@ variable "tags" {
 }
 
 ## Virtual Network
-variable "vnet_name" {
-  description = "The name of the virtual network"
-  type        = string
-}
-
-variable "vnet_address_space" {
-  description = "The address space for the virtual network"
-  type        = string
-}
-
-variable "subnet1_name" {
-  description = "The name of the first subnet"
-  type        = string
-}
-
-variable "subnet1_address_prefix" {
-  description = "The address prefix for the first subnet"
-  type        = string
-}
-
-variable "subnet2_name" {
-  description = "The name of the second subnet"
-  type        = string
-}
-
-variable "subnet2_address_prefix" {
-  description = "The address prefix for the second subnet"
-  type        = string
+variable "virtual_network_module" {
+  type = object({
+    vnet_name              = string
+    vnet_address_space     = string
+    subnet1_name           = string
+    subnet1_address_prefix = string
+    subnet2_name           = string
+    subnet2_address_prefix = string
+  })
+  description = "A map of variables to pass to the virtual network module"
 }
 
 ## AKS Cluster

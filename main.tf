@@ -20,17 +20,7 @@ module "azurerm_resources" {
 
 
   ## Virtual Network
-  vnet_name          = var.vnet_name
-  vnet_address_space = var.vnet_address_space
-
-  subnet1_name           = var.subnet1_name
-  subnet1_address_prefix = var.subnet1_address_prefix
-  # subnet1_nsg_security_rules = [{ # Optional }]
-
-  subnet2_name           = var.subnet2_name
-  subnet2_address_prefix = var.subnet2_address_prefix
-  # subnet2_nsg_security_rules = [{ # Optional }]
-
+  virtual_network_module = var.virtual_network_module
 
   ## AKS Cluster
   aks_cluster_name                 = var.aks_cluster_name
