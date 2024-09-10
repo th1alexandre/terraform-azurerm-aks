@@ -28,12 +28,12 @@ provider "azurerm" {
 
 provider "helm" {
   kubernetes {
-    config_path = "./.kube/aks_config.yaml"
+    config_path = module.azurerm_resources.kubeconfig_path
   }
 }
 
 provider "kubernetes" {
-  config_path = "./.kube/aks_config.yaml"
+  config_path = module.azurerm_resources.kubeconfig_path
 }
 
 provider "local" {}
