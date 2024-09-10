@@ -1,27 +1,13 @@
 ## TF Backend
-variable "tf_backend_resource_group" {
-  description = "The name of the resource group for the Terraform backend resources"
-  type        = string
-}
-
-variable "tf_backend_location" {
-  description = "The location of the resource group for the Terraform backend resources"
-  type        = string
-}
-
-variable "tf_backend_storage_account" {
-  description = "The name of the storage account for the Terraform backend resources"
-  type        = string
-}
-
-variable "tf_backend_container" {
-  description = "The name of the container for the Terraform backend resources"
-  type        = string
-}
-
-variable "tf_backend_state_file_key" {
-  description = "The name of the state file in the container"
-  type        = string
+variable "tf_backend_module" {
+  type = object({
+    resource_group  = string,
+    location        = string,
+    storage_account = string,
+    container       = string,
+    state_file_key  = string
+  })
+  description = "The required variables for the backend module"
 }
 
 ## Resource Group
