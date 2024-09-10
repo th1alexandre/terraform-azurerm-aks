@@ -86,3 +86,17 @@ module "kubeconfig_file" {
   kube_config_raw = module.kubernetes_cluster.kube_config_raw
   filename        = var.aks_kubeconfig_target_file
 }
+
+module "satellite_ingress_nginx_public_ip" {
+  source = "./public_ip"
+
+  public_ip_name    = var.satellite_public_ip_name
+  region_location   = local.region_location
+  resource_group    = module.kubernetes_cluster.node_resource_group
+  allocation_method = var.satellite_public_ip_allocation_method
+  ip_version        = var.satellite_public_ip_version
+  reverse_fqdn      = var.satellite_public_ip_reverse_fqdn
+  sku               = var.satellite_public_ip_sku
+
+  tags = var.tags
+}

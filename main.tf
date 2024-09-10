@@ -71,6 +71,13 @@ module "azurerm_resources" {
   aks_satellite_node_labels            = var.aks_satellite_node_labels
   aks_satellite_enable_host_encryption = var.aks_satellite_enable_host_encryption
 
+  # Satelite Public IP
+  satellite_public_ip_name              = var.satellite_public_ip_name
+  satellite_public_ip_allocation_method = var.satellite_public_ip_allocation_method
+  satellite_public_ip_version           = var.satellite_public_ip_version
+  satellite_public_ip_reverse_fqdn      = var.satellite_public_ip_reverse_fqdn
+  satellite_public_ip_sku               = var.satellite_public_ip_sku
+
 
   ## KUBECONFIG file
   aks_kubeconfig_target_file = var.aks_kubeconfig_target_file
