@@ -34,48 +34,50 @@ module "virtual_network" {
 module "kubernetes_cluster" {
   source = "./aks"
 
-  cluster_name                 = var.aks_cluster_name
-  location                     = local.region_location
-  resource_group_name          = local.resource_group
-  dns_prefix                   = var.aks_dns_prefix
-  automatic_channel_upgrade    = var.aks_automatic_channel_upgrade
-  image_cleaner_enabled        = var.aks_image_cleaner_enabled
-  image_cleaner_interval_hours = var.aks_image_cleaner_interval_hours
-  kubernetes_version           = var.aks_kubernetes_version
-  node_resource_group          = var.aks_node_resource_group
-  private_cluster_enabled      = var.aks_private_cluster_enabled
-  sku_tier                     = var.aks_sku_tier
+  location            = local.region_location
+  resource_group_name = local.resource_group
+
+  # Cluster Variables
+  cluster_name                 = var.kubernetes_cluster_module.cluster_vars.cluster_name
+  dns_prefix                   = var.kubernetes_cluster_module.cluster_vars.dns_prefix
+  automatic_channel_upgrade    = var.kubernetes_cluster_module.cluster_vars.automatic_channel_upgrade
+  image_cleaner_enabled        = var.kubernetes_cluster_module.cluster_vars.image_cleaner_enabled
+  image_cleaner_interval_hours = var.kubernetes_cluster_module.cluster_vars.image_cleaner_interval_hours
+  kubernetes_version           = var.kubernetes_cluster_module.cluster_vars.kubernetes_version
+  node_resource_group          = var.kubernetes_cluster_module.cluster_vars.node_resource_group
+  private_cluster_enabled      = var.kubernetes_cluster_module.cluster_vars.private_cluster_enabled
+  sku_tier                     = var.kubernetes_cluster_module.cluster_vars.sku_tier
 
   # Network Profile
-  network_plugin = var.aks_network_plugin
-  ip_versions    = var.aks_ip_versions
-  service_cidrs  = var.aks_service_cidrs
-  dns_service_ip = var.aks_dns_service_ip
+  network_plugin = var.kubernetes_cluster_module.network_profile.network_plugin
+  ip_versions    = var.kubernetes_cluster_module.network_profile.ip_versions
+  service_cidrs  = var.kubernetes_cluster_module.network_profile.service_cidrs
+  dns_service_ip = var.kubernetes_cluster_module.network_profile.dns_service_ip
 
   # Linux Profile
-  admin_username = var.aks_admin_username
+  admin_username = var.kubernetes_cluster_module.linux_profile.admin_username
   ssh_public_key = file("../../.ssh/id_rsa.pub")
 
   # API Server Access Profile
-  authorized_ip_ranges = var.aks_authorized_ip_ranges
+  authorized_ip_ranges = var.kubernetes_cluster_module.api_server_access_profile.authorized_ip_ranges
 
   ## System Node Pool (Default)
-  system_node_pool_name               = var.aks_system_node_pool_name
-  system_vm_size                      = var.aks_system_vm_size
-  system_node_count                   = var.aks_system_node_count
+  system_node_pool_name               = var.kubernetes_cluster_module.np_system.node_pool_name
+  system_vm_size                      = var.kubernetes_cluster_module.np_system.vm_size
+  system_node_count                   = var.kubernetes_cluster_module.np_system.node_count
   system_vnet_subnet_id               = module.virtual_network.subnet1_id
-  system_node_labels                  = var.aks_system_node_labels
-  system_enable_host_encryption       = var.aks_system_enable_host_encryption
-  system_only_critical_addons_enabled = var.aks_system_only_critical_addons_enabled
-  system_temporary_name_for_rotation  = var.aks_system_temporary_name_for_rotation
+  system_enable_host_encryption       = var.kubernetes_cluster_module.np_system.enable_host_encryption
+  system_only_critical_addons_enabled = var.kubernetes_cluster_module.np_system.only_critical_addons_enabled
+  system_temporary_name_for_rotation  = var.kubernetes_cluster_module.np_system.temporary_name_for_rotation
+  system_node_labels                  = var.kubernetes_cluster_module.np_system.node_labels
 
   ## Satellite Node Pool
-  satellite_node_pool_name         = var.aks_satellite_node_pool_name
-  satellite_vm_size                = var.aks_satellite_vm_size
-  satellite_node_count             = var.aks_satellite_node_count
+  satellite_node_pool_name         = var.kubernetes_cluster_module.np_satellite.node_pool_name
+  satellite_vm_size                = var.kubernetes_cluster_module.np_satellite.vm_size
+  satellite_node_count             = var.kubernetes_cluster_module.np_satellite.node_count
   satellite_vnet_subnet_id         = module.virtual_network.subnet2_id
-  satellite_node_labels            = var.aks_satellite_node_labels
-  satellite_enable_host_encryption = var.aks_satellite_enable_host_encryption
+  satellite_enable_host_encryption = var.kubernetes_cluster_module.np_satellite.enable_host_encryption
+  satellite_node_labels            = var.kubernetes_cluster_module.np_satellite.node_labels
 
   tags = var.tags
 }
