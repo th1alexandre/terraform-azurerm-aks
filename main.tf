@@ -56,7 +56,7 @@ module "helm_resources" {
 
 locals {
   cluster_issuer_variables = merge(var.cloudflare_cluster_issuer, {
-    api_token = cloudflare_resources.cloudflare_token
+    api_token = module.cloudflare_resources.cloudflare_token
   })
 }
 
@@ -65,7 +65,10 @@ module "kubernetes_resources" {
 
   cloudflare_cluster_issuer = local.cluster_issuer_variables
 
-  depends_on = [module.helm_resources]
+  depends_on = [
+    module.helm_resources,
+    module.cloudflare_resources
+  ]
 }
 
 locals {
