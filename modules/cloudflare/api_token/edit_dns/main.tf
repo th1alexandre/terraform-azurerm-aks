@@ -11,4 +11,10 @@ resource "cloudflare_api_token" "this" {
       "com.cloudflare.api.account.zone.${var.zone_id}" = "*"
     }
   }
+
+  condition {
+    request_ip {
+      in = var.token_white_list
+    }
+  }
 }
