@@ -13,6 +13,11 @@ resource "helm_release" "this" {
   cleanup_on_fail = true
 
   set {
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-pip-name"
+    value = var.external_ip_name
+  }
+
+  set {
     name  = "controller.service.loadBalancerIP"
     value = var.external_ip_address
   }
@@ -23,8 +28,8 @@ resource "helm_release" "this" {
   }
 
   set {
-    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-pip-name"
-    value = var.external_ip_name
+    name  = "controller.service.annotations.service\\.beta\\.kubernetes\\.io/azure-load-balancer-health-probe-request-path"
+    value = "/healthz"
   }
 
   depends_on = [module.ingress-nginx-namespace]
