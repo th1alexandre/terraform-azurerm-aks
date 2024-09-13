@@ -23,3 +23,8 @@ variable "proxied" {
   type        = bool
   default     = false
 }
+
+variable "dns_edit_token" {
+  description = "The Cloudflare API token with edit access to DNS records"
+  type        = string
+}

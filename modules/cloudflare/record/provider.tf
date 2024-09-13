@@ -6,3 +6,7 @@ terraform {
     }
   }
 }
+
+provider "cloudflare" {
+  api_token = var.dns_edit_token
+}
