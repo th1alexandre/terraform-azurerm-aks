@@ -122,7 +122,6 @@ variable "ingress-nginx" {
 variable "cloudflare_cluster_issuer" {
   description = "Cloudflare Cluster Issuer variables"
   type = object({
-    api_token   = string
     acme_email  = string
     acme_server = string
   })
