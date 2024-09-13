@@ -74,6 +74,9 @@ module "kubernetes_resources" {
 locals {
   cloudflare_variables = merge(var.cloudflare_variables, {
     record_ip_address = module.azurerm_resources.satellite_pip_ip_address
+    token_white_list = [
+      module.azurerm_resources.satellite_pip_ip_address
+    ]
   })
 }
 
