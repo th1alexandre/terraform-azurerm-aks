@@ -56,7 +56,7 @@ module "helm_resources" {
 
 locals {
   cluster_issuer_variables = merge(var.cloudflare_cluster_issuer, {
-    api_token = module.cloudflare_resources.cloudflare_token
+    api_token = module.cloudflare_resources.cloudflare_edit_dns_token
   })
 }
 

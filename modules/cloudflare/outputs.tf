@@ -1,4 +1,4 @@
-output "cloudflare_token" {
-  value     = module.cloudflare_api_token.token
+output "cloudflare_edit_dns_token" {
+  value     = module.cloudflare_edit_dns_token.token
   sensitive = true
 }
