@@ -3,7 +3,7 @@ locals {
 }
 
 module "domain_zone" {
-  source = "./zone_id"
+  source = "./zone"
 
   zone_name = var.cloudflare_variables.zone_name
 }
