@@ -55,6 +55,20 @@ module "helm_resources" {
 }
 
 locals {
+  cluster_issuer_variables = merge(var.cloudflare_cluster_issuer, {
+    api_token = cloudflare_resources.cloudflare_token
+  })
+}
+
+module "kubernetes_resources" {
+  source = "./modules/kubernetes"
+
+  cloudflare_cluster_issuer = local.cluster_issuer_variables
+
+  depends_on = [module.helm_resources]
+}
+
+locals {
   cloudflare_variables = merge(var.cloudflare_variables, {
     record_ip_address = module.azurerm_resources.satellite_pip_ip_address
   })

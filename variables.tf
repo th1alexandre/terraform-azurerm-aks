@@ -118,6 +118,16 @@ variable "ingress-nginx" {
   })
 }
 
+# Kubernetes Resources
+variable "cloudflare_cluster_issuer" {
+  description = "Cloudflare Cluster Issuer variables"
+  type = object({
+    api_token   = string
+    acme_email  = string
+    acme_server = string
+  })
+}
+
 # Cloudflare
 variable "cloudflare_variables" {
   type = object({
