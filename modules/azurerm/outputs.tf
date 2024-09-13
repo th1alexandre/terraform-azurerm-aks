@@ -1,5 +1,5 @@
 output "kubeconfig_path" {
-  value = var.aks_kubeconfig_target_file
+  value = module.kubeconfig_file.file_path
 }
 
 output "satellite_pip_name" {

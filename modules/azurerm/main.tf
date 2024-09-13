@@ -83,10 +83,11 @@ module "kubernetes_cluster" {
 }
 
 module "kubeconfig_file" {
-  source = "../local/sensitive_file/kubeconfig"
+  source = "../local/sensitive_file"
 
-  kube_config_raw = module.kubernetes_cluster.kube_config_raw
-  filename        = var.aks_kubeconfig_target_file
+  file_permission = "0400"
+  file_name       = var.aks_kubeconfig_target_file
+  file_content    = module.kubernetes_cluster.kube_config_raw
 }
 
 module "satellite_ingress_nginx_public_ip" {
