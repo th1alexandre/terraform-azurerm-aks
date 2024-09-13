@@ -9,3 +9,13 @@ variable "cloudflare_variables" {
   })
   description = "A map of variables to pass to the cloudflare module"
 }
+
+variable "cloudflare_read_zones" {
+  description = "The Cloudflare API token to use for reading zones"
+  type        = string
+}
+
+variable "cloudflare_edit_dns" {
+  description = "The Cloudflare API token to use for editing DNS records"
+  type        = string
+}

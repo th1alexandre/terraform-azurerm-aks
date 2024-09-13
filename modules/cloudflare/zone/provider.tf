@@ -6,7 +6,3 @@ terraform {
     }
   }
 }
-
-provider "cloudflare" {
-  api_token = var.zone_read_token
-}
