@@ -53,3 +53,15 @@ module "helm_resources" {
 
   depends_on = [module.azurerm_resources]
 }
+
+locals {
+  cloudflare_variables = merge(var.cloudflare_variables, {
+    record_ip_address = module.azurerm_resources.satellite_pip_ip_address
+  })
+}
+
+module "cloudflare_resources" {
+  source = "./modules/cloudflare"
+
+  cloudflare_variables = local.cloudflare_variables
+}
