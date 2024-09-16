@@ -38,4 +38,6 @@ resource "kubernetes_manifest" "letsencrypt_issuer_cloudflare" {
       }
     }
   }
+
+  depends_on = [kubernetes_secret.cloudflare_api_token_secret]
 }
