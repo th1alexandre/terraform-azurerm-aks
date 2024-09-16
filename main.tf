@@ -59,7 +59,7 @@ module "helm_resources" {
 
 locals {
   cluster_issuer_variables = merge(var.cloudflare_cluster_issuer, {
-    api_token = module.cloudflare_resources.cloudflare_edit_dns_token
+    api_token = var.cloudflare_tokens.edit_dns
   })
 }
 
@@ -76,15 +76,14 @@ module "kubernetes_resources" {
 
 locals {
   cloudflare_variables = merge(var.cloudflare_variables, {
-    record_ip_address = module.azurerm_resources.satellite_pip_ip_address
-    token_white_list = [
-      module.azurerm_resources.satellite_pip_ip_address
-    ]
+    record_ip_address = module.azurerm_resources.aks_cluster_pip_ip_address
   })
 }
 
 module "cloudflare_resources" {
   source = "./modules/cloudflare"
 
-  cloudflare_variables = local.cloudflare_variables
+  cloudflare_variables  = local.cloudflare_variables
+  cloudflare_read_zones = var.cloudflare_tokens.read_zones
+  cloudflare_edit_dns   = var.cloudflare_tokens.edit_dns
 }

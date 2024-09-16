@@ -5,7 +5,7 @@ locals {
 module "domain_zone" {
   source = "./zone"
 
-  zone_name       = var.cloudflare_variables.zone_name
+  zone_name = var.cloudflare_variables.zone_name
 
   providers = {
     cloudflare = cloudflare.read_zones

@@ -148,3 +148,11 @@ variable "cloudflare_variables" {
   })
   description = "A map of variables to pass to the cloudflare module"
 }
+
+variable "cloudflare_tokens" {
+  type = object({
+    edit_dns   = string
+    read_zones = string
+  })
+  description = "A map of cloudflare api tokens with unique permissions"
+}
