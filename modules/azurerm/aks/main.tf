@@ -12,10 +12,15 @@ resource "azurerm_kubernetes_cluster" "this" {
   sku_tier                     = var.sku_tier
 
   network_profile {
-    network_plugin = var.network_plugin
-    ip_versions    = var.ip_versions
-    service_cidrs  = var.service_cidrs
-    dns_service_ip = var.dns_service_ip
+    network_plugin    = var.network_plugin
+    ip_versions       = var.ip_versions
+    service_cidrs     = var.service_cidrs
+    dns_service_ip    = var.dns_service_ip
+    load_balancer_sku = var.load_balancer_sku
+
+    load_balancer_profile {
+      outbound_ip_address_ids = var.outbound_ip_address_ids
+    }
   }
 
   linux_profile {

@@ -1,6 +1,7 @@
 locals {
-  region_location = module.resource_group.location
-  resource_group  = module.resource_group.name
+  region_location         = module.resource_group.location
+  resource_group          = module.resource_group.name
+  aks_node_resource_group = var.kubernetes_cluster_module.cluster_vars.node_resource_group
 }
 
 module "resource_group" {
@@ -44,15 +45,17 @@ module "kubernetes_cluster" {
   image_cleaner_enabled        = var.kubernetes_cluster_module.cluster_vars.image_cleaner_enabled
   image_cleaner_interval_hours = var.kubernetes_cluster_module.cluster_vars.image_cleaner_interval_hours
   kubernetes_version           = var.kubernetes_cluster_module.cluster_vars.kubernetes_version
-  node_resource_group          = var.kubernetes_cluster_module.cluster_vars.node_resource_group
+  node_resource_group          = local.aks_node_resource_group
   private_cluster_enabled      = var.kubernetes_cluster_module.cluster_vars.private_cluster_enabled
   sku_tier                     = var.kubernetes_cluster_module.cluster_vars.sku_tier
 
   # Network Profile
-  network_plugin = var.kubernetes_cluster_module.network_profile.network_plugin
-  ip_versions    = var.kubernetes_cluster_module.network_profile.ip_versions
-  service_cidrs  = var.kubernetes_cluster_module.network_profile.service_cidrs
-  dns_service_ip = var.kubernetes_cluster_module.network_profile.dns_service_ip
+  network_plugin          = var.kubernetes_cluster_module.network_profile.network_plugin
+  ip_versions             = var.kubernetes_cluster_module.network_profile.ip_versions
+  service_cidrs           = var.kubernetes_cluster_module.network_profile.service_cidrs
+  dns_service_ip          = var.kubernetes_cluster_module.network_profile.dns_service_ip
+  load_balancer_sku       = var.kubernetes_cluster_module.network_profile.load_balancer_sku
+  outbound_ip_address_ids = [module.aks_cluster_public_ip.id]
 
   # Linux Profile
   admin_username = var.kubernetes_cluster_module.linux_profile.admin_username
@@ -90,11 +93,26 @@ module "kubeconfig_file" {
   file_content    = module.kubernetes_cluster.kube_config_raw
 }
 
+module "aks_cluster_public_ip" {
+  source = "./public_ip"
+
+  region_location = local.region_location
+  resource_group  = local.aks_node_resource_group
+
+  public_ip_name    = var.aks_cluster_pip_module.pip_name
+  allocation_method = var.aks_cluster_pip_module.allocation_method
+  ip_version        = var.aks_cluster_pip_module.ip_version
+  reverse_fqdn      = var.aks_cluster_pip_module.reverse_fqdn
+  sku               = var.aks_cluster_pip_module.sku
+
+  tags = var.tags
+}
+
 module "satellite_ingress_nginx_public_ip" {
   source = "./public_ip"
 
   region_location = local.region_location
-  resource_group  = module.kubernetes_cluster.node_resource_group
+  resource_group  = local.aks_node_resource_group
 
   public_ip_name    = var.satellite_ingress_nginx_pip_module.pip_name
   allocation_method = var.satellite_ingress_nginx_pip_module.allocation_method

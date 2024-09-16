@@ -75,6 +75,16 @@ variable "dns_service_ip" {
   type        = string
 }
 
+variable "load_balancer_sku" {
+  description = "The SKU of the Load Balancer"
+  type        = string
+}
+
+variable "outbound_ip_address_ids" {
+  description = "The IDs of the public IP addresses used for outbound traffic"
+  type        = list(string)
+}
+
 # Linux Profile
 variable "admin_username" {
   description = "The username for the Linux Virtual Machines"

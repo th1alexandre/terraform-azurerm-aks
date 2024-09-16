@@ -25,6 +25,9 @@ module "azurerm_resources" {
   ## AKS Cluster
   kubernetes_cluster_module = var.kubernetes_cluster_module
 
+  ## AKS Cluster Public IP
+  aks_cluster_pip_module = var.aks_cluster_pip_module
+
   ## Satellite Public IP
   satellite_ingress_nginx_pip_module = var.satellite_ingress_nginx_pip_module
 

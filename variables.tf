@@ -55,10 +55,11 @@ variable "kubernetes_cluster_module" {
       sku_tier                     = string
     })
     network_profile = object({
-      network_plugin = string
-      ip_versions    = list(string)
-      service_cidrs  = list(string)
-      dns_service_ip = string
+      network_plugin    = string
+      ip_versions       = list(string)
+      service_cidrs     = list(string)
+      dns_service_ip    = string
+      load_balancer_sku = string
     })
     linux_profile = object({
       admin_username = string
@@ -86,7 +87,17 @@ variable "kubernetes_cluster_module" {
   description = "A map of variables to pass to the kubernetes cluster module"
 }
 
-## Satellite Ingress-Nginx Public IP
+## Public IPs
+variable "aks_cluster_pip_module" {
+  type = object({
+    pip_name          = string
+    allocation_method = string
+    ip_version        = string
+    reverse_fqdn      = string
+    sku               = string
+  })
+}
+
 variable "satellite_ingress_nginx_pip_module" {
   type = object({
     pip_name          = string

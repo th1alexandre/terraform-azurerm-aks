@@ -1,3 +1,8 @@
+output "id" {
+  description = "The ID of the Public IP"
+  value       = azurerm_public_ip.this.id
+}
+
 output "name" {
   description = "The name of the Public IP"
   value       = azurerm_public_ip.this.name
