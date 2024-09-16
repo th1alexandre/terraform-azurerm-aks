@@ -10,6 +10,7 @@ resource "helm_release" "this" {
   namespace       = "cert-manager"
   repository      = "https://charts.jetstack.io"
   version         = var.chart_version
+  atomic          = true
   cleanup_on_fail = true
 
   set {

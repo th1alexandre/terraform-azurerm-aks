@@ -10,6 +10,7 @@ resource "helm_release" "this" {
   namespace       = "ingress-nginx"
   repository      = "https://kubernetes.github.io/ingress-nginx"
   version         = var.chart_version
+  atomic          = true
   cleanup_on_fail = true
 
   set {
