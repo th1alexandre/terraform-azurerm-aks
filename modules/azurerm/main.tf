@@ -21,13 +21,13 @@ module "virtual_network" {
   resource_group_name = local.resource_group
   location            = local.region_location
 
-  subnet1_name           = var.virtual_network_module.subnet1_name
-  subnet1_address_prefix = var.virtual_network_module.subnet1_address_prefix
-  # subnet1_nsg_security_rules = [{ # Optional }]
+  system_subnet_name           = var.virtual_network_module.system_subnet_name
+  system_subnet_address_prefix = var.virtual_network_module.system_subnet_address_prefix
+  # system_subnet_nsg_security_rules = [{ # Optional }]
 
-  subnet2_name           = var.virtual_network_module.subnet2_name
-  subnet2_address_prefix = var.virtual_network_module.subnet2_address_prefix
-  # subnet2_nsg_security_rules = [{ # Optional }]
+  satellite_subnet_name           = var.virtual_network_module.satellite_subnet_name
+  satellite_subnet_address_prefix = var.virtual_network_module.satellite_subnet_address_prefix
+  # satellite_subnet_nsg_security_rules = [{ # Optional }]
 
   tags = var.tags
 }
@@ -68,7 +68,7 @@ module "kubernetes_cluster" {
   system_node_pool_name               = var.kubernetes_cluster_module.np_system.node_pool_name
   system_vm_size                      = var.kubernetes_cluster_module.np_system.vm_size
   system_node_count                   = var.kubernetes_cluster_module.np_system.node_count
-  system_vnet_subnet_id               = module.virtual_network.subnet1_id
+  system_vnet_subnet_id               = module.virtual_network.system_subnet_id
   system_enable_host_encryption       = var.kubernetes_cluster_module.np_system.enable_host_encryption
   system_only_critical_addons_enabled = var.kubernetes_cluster_module.np_system.only_critical_addons_enabled
   system_temporary_name_for_rotation  = var.kubernetes_cluster_module.np_system.temporary_name_for_rotation
@@ -78,7 +78,7 @@ module "kubernetes_cluster" {
   satellite_node_pool_name         = var.kubernetes_cluster_module.np_satellite.node_pool_name
   satellite_vm_size                = var.kubernetes_cluster_module.np_satellite.vm_size
   satellite_node_count             = var.kubernetes_cluster_module.np_satellite.node_count
-  satellite_vnet_subnet_id         = module.virtual_network.subnet2_id
+  satellite_vnet_subnet_id         = module.virtual_network.satellite_subnet_id
   satellite_enable_host_encryption = var.kubernetes_cluster_module.np_satellite.enable_host_encryption
   satellite_node_labels            = var.kubernetes_cluster_module.np_satellite.node_labels
 

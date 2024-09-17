@@ -18,17 +18,17 @@ variable "location" {
   type        = string
 }
 
-variable "subnet1_name" {
+variable "system_subnet_name" {
   description = "The name of the first subnet."
   type        = string
 }
 
-variable "subnet1_address_prefix" {
+variable "system_subnet_address_prefix" {
   description = "The address prefix for the first subnet."
   type        = string
 }
 
-variable "subnet1_nsg_security_rules" {
+variable "system_subnet_nsg_security_rules" {
   description = "The security rules for the subnet 1."
   type = list(object({
     name                         = string
@@ -44,17 +44,17 @@ variable "subnet1_nsg_security_rules" {
   default = null # Make this variable optional
 }
 
-variable "subnet2_name" {
+variable "satellite_subnet_name" {
   description = "The name of the second subnet."
   type        = string
 }
 
-variable "subnet2_address_prefix" {
+variable "satellite_subnet_address_prefix" {
   description = "The address prefix for the second subnet."
   type        = string
 }
 
-variable "subnet2_nsg_security_rules" {
+variable "satellite_subnet_nsg_security_rules" {
   description = "The security rules for the subnet 2."
   type = list(object({
     name                         = string

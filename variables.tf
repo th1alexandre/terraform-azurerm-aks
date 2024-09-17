@@ -30,12 +30,12 @@ variable "tags" {
 ## Virtual Network
 variable "virtual_network_module" {
   type = object({
-    vnet_name              = string
-    vnet_address_space     = string
-    subnet1_name           = string
-    subnet1_address_prefix = string
-    subnet2_name           = string
-    subnet2_address_prefix = string
+    vnet_name                       = string
+    vnet_address_space              = string
+    system_subnet_name              = string
+    system_subnet_address_prefix    = string
+    satellite_subnet_name           = string
+    satellite_subnet_address_prefix = string
   })
   description = "A map of variables to pass to the virtual network module"
 }
