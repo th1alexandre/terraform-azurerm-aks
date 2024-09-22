@@ -49,11 +49,11 @@ module "kubernetes_cluster" {
   sku_tier                     = var.kubernetes_cluster_module.cluster_vars.sku_tier
 
   # Network Profile
-  network_plugin          = var.kubernetes_cluster_module.network_profile.network_plugin
-  ip_versions             = var.kubernetes_cluster_module.network_profile.ip_versions
-  service_cidrs           = var.kubernetes_cluster_module.network_profile.service_cidrs
-  dns_service_ip          = var.kubernetes_cluster_module.network_profile.dns_service_ip
-  load_balancer_sku       = var.kubernetes_cluster_module.network_profile.load_balancer_sku
+  network_plugin    = var.kubernetes_cluster_module.network_profile.network_plugin
+  ip_versions       = var.kubernetes_cluster_module.network_profile.ip_versions
+  service_cidrs     = var.kubernetes_cluster_module.network_profile.service_cidrs
+  dns_service_ip    = var.kubernetes_cluster_module.network_profile.dns_service_ip
+  load_balancer_sku = var.kubernetes_cluster_module.network_profile.load_balancer_sku
 
   # Linux Profile
   admin_username = var.kubernetes_cluster_module.linux_profile.admin_username
