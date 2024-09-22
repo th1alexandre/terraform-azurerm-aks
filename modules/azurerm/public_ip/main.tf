@@ -6,5 +6,9 @@ resource "azurerm_public_ip" "this" {
   ip_version          = var.ip_version
   sku                 = var.sku
 
+  lifecycle {
+    create_before_destroy = true
+  }
+
   tags = var.tags
 }

@@ -5,6 +5,11 @@ terraform {
       version = "3.116.0"
     }
 
+    azapi = {
+      source = "Azure/azapi"
+      version = "1.15.0"
+    }
+
     cloudflare = {
       source  = "cloudflare/cloudflare"
       version = "4.41.0"
@@ -34,6 +39,8 @@ provider "azurerm" {
     }
   }
 }
+
+provider "azapi" {}
 
 provider "cloudflare" {}
 

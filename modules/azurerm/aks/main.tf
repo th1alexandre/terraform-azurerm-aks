@@ -17,10 +17,6 @@ resource "azurerm_kubernetes_cluster" "this" {
     service_cidrs     = var.service_cidrs
     dns_service_ip    = var.dns_service_ip
     load_balancer_sku = var.load_balancer_sku
-
-    load_balancer_profile {
-      outbound_ip_address_ids = var.outbound_ip_address_ids
-    }
   }
 
   linux_profile {
@@ -60,6 +56,10 @@ resource "azurerm_kubernetes_cluster" "this" {
     node_labels = var.system_node_labels
 
     tags = var.tags
+  }
+
+  lifecycle {
+    ignore_changes = [network_profile.0.load_balancer_profile.0.outbound_ip_address_ids]
   }
 
   tags = var.tags

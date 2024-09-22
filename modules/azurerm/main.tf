@@ -1,7 +1,6 @@
 locals {
-  region_location         = module.resource_group.location
-  resource_group          = module.resource_group.name
-  aks_node_resource_group = var.kubernetes_cluster_module.cluster_vars.node_resource_group
+  region_location = module.resource_group.location
+  resource_group  = module.resource_group.name
 }
 
 module "resource_group" {
@@ -45,7 +44,7 @@ module "kubernetes_cluster" {
   image_cleaner_enabled        = var.kubernetes_cluster_module.cluster_vars.image_cleaner_enabled
   image_cleaner_interval_hours = var.kubernetes_cluster_module.cluster_vars.image_cleaner_interval_hours
   kubernetes_version           = var.kubernetes_cluster_module.cluster_vars.kubernetes_version
-  node_resource_group          = local.aks_node_resource_group
+  node_resource_group          = var.kubernetes_cluster_module.cluster_vars.node_resource_group
   private_cluster_enabled      = var.kubernetes_cluster_module.cluster_vars.private_cluster_enabled
   sku_tier                     = var.kubernetes_cluster_module.cluster_vars.sku_tier
 
@@ -55,7 +54,6 @@ module "kubernetes_cluster" {
   service_cidrs           = var.kubernetes_cluster_module.network_profile.service_cidrs
   dns_service_ip          = var.kubernetes_cluster_module.network_profile.dns_service_ip
   load_balancer_sku       = var.kubernetes_cluster_module.network_profile.load_balancer_sku
-  outbound_ip_address_ids = [module.aks_cluster_public_ip.id]
 
   # Linux Profile
   admin_username = var.kubernetes_cluster_module.linux_profile.admin_username
@@ -93,11 +91,37 @@ module "kubeconfig_file" {
   file_content    = module.kubernetes_cluster.kube_config_raw
 }
 
+resource "azapi_update_resource" "add_cluster_outbound_ip" {
+  type        = "Microsoft.ContainerService/managedClusters@2024-06-02-preview"
+  resource_id = module.kubernetes_cluster.cluster_id
+  body = jsonencode({
+    properties = {
+      networkProfile = {
+        loadBalancerProfile = {
+          outboundIPs = {
+            publicIPs = [
+              {
+                id = module.aks_cluster_public_ip.id
+              }
+            ]
+          }
+        }
+      }
+    }
+  })
+
+  depends_on = [
+    module.kubernetes_cluster,
+    module.aks_cluster_public_ip,
+    module.satellite_ingress_nginx_public_ip # 409 Conflict (satellite - Creating)
+  ]
+}
+
 module "aks_cluster_public_ip" {
   source = "./public_ip"
 
   region_location = local.region_location
-  resource_group  = local.aks_node_resource_group
+  resource_group  = module.kubernetes_cluster.node_resource_group
 
   public_ip_name    = var.aks_cluster_pip_module.pip_name
   allocation_method = var.aks_cluster_pip_module.allocation_method
@@ -112,7 +136,7 @@ module "satellite_ingress_nginx_public_ip" {
   source = "./public_ip"
 
   region_location = local.region_location
-  resource_group  = local.aks_node_resource_group
+  resource_group  = module.kubernetes_cluster.node_resource_group
 
   public_ip_name    = var.satellite_ingress_nginx_pip_module.pip_name
   allocation_method = var.satellite_ingress_nginx_pip_module.allocation_method
